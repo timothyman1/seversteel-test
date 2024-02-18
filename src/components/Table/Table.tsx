@@ -1,16 +1,16 @@
 import { useMemo, useState } from 'react';
 
-import DATA from '@/constants/DATA.json'
-import { TableRow } from '@/components/Table/TableRow/TableRow'
+import DATA from '@/constants/DATA.json';
+import { TableRow } from '@/components/Table/TableRow/TableRow';
 import { Filter } from '@/components/Table/Filter';
 
 import { S } from '@/styles/styles.style';
-import { Person } from '@/types'
+import { Person } from '@/types';
 
 enum OrderEnum {
-  default = "",
-  ascending = " ˅",
-  descending = " ˄"
+  default = '',
+  ascending = ' ˅',
+  descending = ' ˄',
 }
 
 const originalData = DATA;
@@ -34,34 +34,26 @@ export const Table = () => {
       default:
         break;
     }
-    return filter
+    return filter;
   }, [filteredData, order]);
 
   const handleSearch = (newFilteredData: Person[]) => {
     setFiltredData(newFilteredData);
-  }
+  };
 
   const getData = (data: Person[], parentId = 0, level = 0): JSX.Element => (
     <>
-      {
-        data.filter(el => data.length !== originalData.length ? true : el.parentId === parentId)
-          .map(person => (
-            <TableRow key={person.id} person={person} data={data} getData={getData} level={level} isFiltered={isFiltered} />
-          ))
-      }
+      {data
+        .filter((el) => (data.length !== originalData.length ? true : el.parentId === parentId))
+        .map((person) => (
+          <TableRow key={person.id} person={person} data={data} getData={getData} level={level} isFiltered={isFiltered} />
+        ))}
     </>
-  )
+  );
 
   const sortBy = () => {
-    setOrder(
-      prevOrder =>
-        prevOrder === OrderEnum.default
-          ? OrderEnum.ascending
-          : prevOrder === OrderEnum.ascending
-            ? OrderEnum.descending
-            : OrderEnum.default
-    );
-  }
+    setOrder((prevOrder) => (prevOrder === OrderEnum.default ? OrderEnum.ascending : prevOrder === OrderEnum.ascending ? OrderEnum.descending : OrderEnum.default));
+  };
 
   return (
     <div>
@@ -79,18 +71,17 @@ export const Table = () => {
           </S.THeadTR>
         </S.Thead>
         <S.Tbody>
-          {filteredData.length ?
-            getData(sortedData) :
-            (
-              <S.TBodyTR>
-                <S.TD colSpan={Object.keys(originalData[0]).length + 1}>
-                  <S.H1>Нет результата поиска</S.H1>
-                </S.TD>
-              </S.TBodyTR>
-            )
-          }
+          {filteredData.length ? (
+            getData(sortedData)
+          ) : (
+            <S.TBodyTR>
+              <S.TD colSpan={Object.keys(originalData[0]).length + 1}>
+                <S.H1>Нет результата поиска</S.H1>
+              </S.TD>
+            </S.TBodyTR>
+          )}
         </S.Tbody>
       </S.Table>
-    </div >
-  )
-}
+    </div>
+  );
+};
