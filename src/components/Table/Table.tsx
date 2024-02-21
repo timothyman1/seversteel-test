@@ -37,23 +37,40 @@ export const Table = () => {
     return filter;
   }, [filteredData, order]);
 
+  const sortBy = () => {
+    setOrder((prevOrder) =>
+      prevOrder === OrderEnum.default
+        ? OrderEnum.ascending
+        : prevOrder === OrderEnum.ascending
+        ? OrderEnum.descending
+        : OrderEnum.default
+    );
+  };
+
   const handleSearch = (newFilteredData: Person[]) => {
     setFiltredData(newFilteredData);
   };
 
-  const getData = (data: Person[], parentId = 0, level = 0): JSX.Element => (
+  const hasChildren = (id: number) => {
+    return sortedData.some((item) => item.parentId === id);
+  };
+
+  const getData = (parentId = 0, level = 0): JSX.Element => (
     <>
-      {data
-        .filter((el) => (data.length !== originalData.length ? true : el.parentId === parentId))
+      {sortedData
+        .filter((item) => item.parentId === parentId)
         .map((person) => (
-          <TableRow key={person.id} person={person} data={data} getData={getData} level={level} isFiltered={isFiltered} />
+          <TableRow
+            key={person.id}
+            person={person}
+            getData={getData}
+            level={level}
+            hasChildren={hasChildren(person.id)}
+            isFiltered={isFiltered}
+          />
         ))}
     </>
   );
-
-  const sortBy = () => {
-    setOrder((prevOrder) => (prevOrder === OrderEnum.default ? OrderEnum.ascending : prevOrder === OrderEnum.ascending ? OrderEnum.descending : OrderEnum.default));
-  };
 
   return (
     <div>
@@ -72,7 +89,7 @@ export const Table = () => {
         </S.Thead>
         <S.Tbody>
           {filteredData.length ? (
-            getData(sortedData)
+            getData()
           ) : (
             <S.TBodyTR>
               <S.TD colSpan={Object.keys(originalData[0]).length + 1}>

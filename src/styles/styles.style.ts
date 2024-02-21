@@ -1,23 +1,23 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { v } from "@/styles/variable.style";
-
+import { v } from '@/styles/variable.style';
 
 const Table = styled.table`
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
-    border-radius: ${v.borderRadius};
-    overflow: hidden;
-    box-shadow: ${v.boxShadow};
+  table-layout: inherit;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border-radius: ${v.borderRadius};
+  overflow: hidden;
+  box-shadow: ${v.boxShadow};
 `;
 
 const Thead = styled.thead`
-    position: sticky;
-    z-index: 100;
+  position: sticky;
+  z-index: 100;
 `;
 const THeadTR = styled.tr`
-    background: ${({ theme }) => theme.bg};
+  background: ${({ theme }) => theme.bg};
 `;
 const TH = styled.th`
   font-weight: normal;
@@ -27,31 +27,29 @@ const TH = styled.th`
   font-weight: 600;
   font-size: 14px;
 `;
-const Tbody = styled.tbody`
-
-`;
+const Tbody = styled.tbody``;
 const TBodyTR = styled.tr`
-    background: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.white};
 `;
 
 const TD = styled.td`
-    padding: ${v.smSpacing};
-    border: 1px solid ${({ theme }) => theme.white};
-    font-size: 14px;
+  padding: ${v.smSpacing};
+  border: 1px solid ${({ theme }) => theme.white};
+  font-size: 14px;
 `;
 const TDEmpty = styled(TD)`
-    width: 90px;
-    height: 48px;
+  width: 90px;
+  height: 48px;
 `;
 
 const THBalance = styled(TH)`
-    &:hover {
-      cursor: pointer;
-    }
-    background: ${({ theme }) => theme.bg3};
-`
+  &:hover {
+    cursor: pointer;
+  }
+  background: ${({ theme }) => theme.bg3};
+`;
 
-const Button = styled.button`  
+const Button = styled.button`
   padding: 0px;
   width: 100%;
   height: 100%;
@@ -66,7 +64,7 @@ const Button = styled.button`
 
 const H1 = styled.h1`
   text-align: center;
-`
+`;
 
 export const S = {
   Table,
@@ -79,5 +77,5 @@ export const S = {
   Button,
   THBalance,
   TDEmpty,
-  H1
-}
+  H1,
+};

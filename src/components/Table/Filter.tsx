@@ -8,22 +8,16 @@ interface FilterProps {
 
 export const Filter: React.FC<FilterProps> = ({ data, onFilter }) => {
   const handleSearch = useDebounce((term) => {
-    const filteredData = data.filter((person) => person.name.toLowerCase().includes(term));
+    const filteredData = data.filter((person) =>
+      person.name.toLowerCase().includes(term as string)
+    );
     onFilter(filteredData);
-  }, 500);
-
-  // const handleSearchQuery = (searchQuery: string) => {
-  //   // const searchQuery = e.target.value.toLowerCase();
-
-  //   const filteredData = data.filter((person) => person.name.toLowerCase().includes(searchQuery));
-  //   onFilter(filteredData);
-  // };
+  }, 300);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchQuery = e.target.value.toLowerCase();
 
     handleSearch(searchQuery);
-    // handleSearchQuery(searchQuery);
   };
 
   return (

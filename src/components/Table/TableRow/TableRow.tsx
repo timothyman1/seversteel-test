@@ -7,24 +7,34 @@ import { S } from '@/styles/styles.style';
 
 interface RowProps {
   person: Person;
-  data: Array<Person>;
-  getData: (data: Array<Person>, parentId: number, level: number) => JSX.Element;
+  // data: Array<Person>;
+  getData: (parentId: number, level: number) => JSX.Element;
   level: number;
+  hasChildren: boolean;
   isFiltered: boolean;
 }
 
-export const TableRow: React.FC<RowProps> = ({ person, data, getData, level, isFiltered }) => {
+export const TableRow: React.FC<RowProps> = ({
+  person,
+  getData,
+  level,
+  hasChildren,
+  isFiltered,
+}) => {
   const [expand, setExpand] = useState(false);
 
-  const rowStyle = { background: `rgb(${255 - 20 * level}, ${255 - 20 * level}, ${255 - 20 * level})` };
-  const hasChildren = data.some((p) => p.parentId === person.id);
-  
+  const rowStyle = {
+    background: `rgb(${255 - 20 * level}, ${255 - 20 * level}, ${255 - 20 * level})`,
+  };
+
   return (
     <>
       <S.TBodyTR style={rowStyle}>
         {hasChildren && !isFiltered ? (
           <S.TD>
-            <S.Button onClick={() => setExpand(!expand)}>{expand ? <MdExpandLess /> : <MdExpandMore />}</S.Button>
+            <S.Button onClick={() => setExpand(!expand)}>
+              {expand ? <MdExpandLess /> : <MdExpandMore />}
+            </S.Button>
           </S.TD>
         ) : (
           <S.TDEmpty></S.TDEmpty>
@@ -39,7 +49,7 @@ export const TableRow: React.FC<RowProps> = ({ person, data, getData, level, isF
         <S.TD>{person.name}</S.TD>
         <S.TD>{person.email}</S.TD>
       </S.TBodyTR>
-      {expand && !isFiltered && getData(data, person.id, level + 1)}
+      {expand && !isFiltered && getData(person.id, level + 1)}
     </>
   );
 };
